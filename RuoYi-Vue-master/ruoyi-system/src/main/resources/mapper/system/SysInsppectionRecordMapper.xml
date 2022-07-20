@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysInsppectionRecordMapper">
+    
+    <resultMap type="SysInsppectionRecord" id="SysInsppectionRecordResult">
+        <result property="inspectionId"    column="inspection_id"    />
+        <result property="dataRoom"    column="data_room"    />
+        <result property="transferRoom"    column="transfer_room"    />
+        <result property="cableRoom"    column="cable_room"    />
+        <result property="powerRoom"    column="power_room"    />
+        <result property="environment"    column="environment"    />
+        <result property="abnormal"    column="abnormal"    />
+        <result property="remark"    column="remark"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSysInsppectionRecordVo">
+        select inspection_id, data_room, transfer_room, cable_room, power_room, environment, abnormal, remark, create_by, create_time, update_by, update_time from sys_insppection_record
+    </sql>
+
+    <select id="selectSysInsppectionRecordList" parameterType="SysInsppectionRecord" resultMap="SysInsppectionRecordResult">
+        <include refid="selectSysInsppectionRecordVo"/>
+        <where>  
+            <if test="dataRoom != null "> and data_room = #{dataRoom}</if>
+            <if test="transferRoom != null "> and transfer_room = #{transferRoom}</if>
+            <if test="cableRoom != null "> and cable_room = #{cableRoom}</if>
+            <if test="powerRoom != null "> and power_room = #{powerRoom}</if>
+            <if test="environment != null "> and environment = #{environment}</if>
+            <if test="abnormal != null  and abnormal != ''"> and abnormal = #{abnormal}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysInsppectionRecordByInspectionId" parameterType="Long" resultMap="SysInsppectionRecordResult">
+        <include refid="selectSysInsppectionRecordVo"/>
+        where inspection_id = #{inspectionId}
+    </select>
+        
+    <insert id="insertSysInsppectionRecord" parameterType="SysInsppectionRecord" useGeneratedKeys="true" keyProperty="inspectionId">
+        insert into sys_insppection_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dataRoom != null">data_room,</if>
+            <if test="transferRoom != null">transfer_room,</if>
+            <if test="cableRoom != null">cable_room,</if>
+            <if test="powerRoom != null">power_room,</if>
+            <if test="environment != null">environment,</if>
+            <if test="abnormal != null">abnormal,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dataRoom != null">#{dataRoom},</if>
+            <if test="transferRoom != null">#{transferRoom},</if>
+            <if test="cableRoom != null">#{cableRoom},</if>
+            <if test="powerRoom != null">#{powerRoom},</if>
+            <if test="environment != null">#{environment},</if>
+            <if test="abnormal != null">#{abnormal},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysInsppectionRecord" parameterType="SysInsppectionRecord">
+        update sys_insppection_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dataRoom != null">data_room = #{dataRoom},</if>
+            <if test="transferRoom != null">transfer_room = #{transferRoom},</if>
+            <if test="cableRoom != null">cable_room = #{cableRoom},</if>
+            <if test="powerRoom != null">power_room = #{powerRoom},</if>
+            <if test="environment != null">environment = #{environment},</if>
+            <if test="abnormal != null">abnormal = #{abnormal},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where inspection_id = #{inspectionId}
+    </update>
+
+    <delete id="deleteSysInsppectionRecordByInspectionId" parameterType="Long">
+        delete from sys_insppection_record where inspection_id = #{inspectionId}
+    </delete>
+
+    <delete id="deleteSysInsppectionRecordByInspectionIds" parameterType="String">
+        delete from sys_insppection_record where inspection_id in 
+        <foreach item="inspectionId" collection="array" open="(" separator="," close=")">
+            #{inspectionId}
+        </foreach>
+    </delete>
+</mapper>
